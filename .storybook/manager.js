@@ -5,7 +5,7 @@ addons.setConfig({
   theme: {
     ...themes.dark,
     brandImage: './icon.svg',
-    brandTitle: 'Hamish Williams Components',
-    brandUrl: 'https://hamishw.com',
+    brandTitle: 'Enea Kuca Components',
+    brandUrl: 'https://7f5c5dae.my-portfolio-92p.pages.dev/',
   },
 });

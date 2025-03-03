@@ -1,8 +1,8 @@
 {
   "name": "portfolio",
-  "homepage": "https://hamishw.com",
-  "description": "Portfolio site for Hamish Williams",
-  "repository": "https://github.com/HamishMW/portfolio.git",
+  "homepage": "https://7f5c5dae.my-portfolio-92p.pages.dev/",
+  "description": "Portfolio site for Enea Kuca",
+  "repository": "https://github.com/EneaK9/my-portfolio-new-v2.0.git",
   "author": "Hamish Williams",
   "sideEffects": false,
   "type": "module",

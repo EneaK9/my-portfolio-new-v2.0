@@ -1,38 +1,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://hamishw.com/</loc>
+    <loc>https://7f5c5dae.my-portfolio-92p.pages.dev/</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://hamishw.com/contact/</loc>
+    <loc>https://7f5c5dae.my-portfolio-92p.pages.dev/contact/</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://hamishw.com/articles/</loc>
+    <loc>https://7f5c5dae.my-portfolio-92p.pages.dev/articles/</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://hamishw.com/uses/</loc>
+    <loc>https://7f5c5dae.my-portfolio-92p.pages.dev/uses/</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://hamishw.com/projects/slice/</loc>
+    <loc>https://7f5c5dae.my-portfolio-92p.pages.dev/projects/slice/</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://hamishw.com/projects/smart-sparrow/</loc>
+    <loc>https://7f5c5dae.my-portfolio-92p.pages.dev/projects/smart-sparrow</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://hamishw.com/projects/volkihar-knight/</loc>
+    <loc>https://7f5c5dae.my-portfolio-92p.pages.dev/articles/hello-world</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://hamishw.com/articles/hello-world</loc>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://hamishw.com/articles/modern-styling-in-react</loc>
+    <loc>https://7f5c5dae.my-portfolio-92p.pages.dev/articles/modern-styling-in-react</loc>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>

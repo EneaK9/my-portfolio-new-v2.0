@@ -21,17 +21,11 @@ const ProfileText = ({ visible, titleId }) => (
       <DecoderText text="Hi there" start={visible} delay={500} />
     </Heading>
     <Text className={styles.description} data-visible={visible} size="l" as="p">
-      I’m Hamish, currently I live in Sydney working as a senior product designer at{' '}
-      <Link href="https://www.qwilr.com">Qwilr</Link>. My projects include UX design, UI
-      animations, and icon illustration. Being comfortable with code allows me to rapidly
-      prototype and validate experiences. If you’re interested in the tools and software I
-      use check out my <Link href="/uses">uses page</Link>.
-    </Text>
-    <Text className={styles.description} data-visible={visible} size="l" as="p">
-      In my spare time I like to practice Brazilian Jiu Jitsu, play video games, and{' '}
-      <Link href="/projects/volkihar-knight">make mods</Link>. I’m always down for hearing
-      about new projects, so feel free to drop me a line.
-    </Text>
+  I’m Enea, a Computer Science student at Polis University and a Software Developer. My expertise includes building modern web applications using React, Next.js, TypeScript, and Tailwind CSS. I have a strong foundation in Python, Java, and C#, and I enjoy creating intuitive user experiences with interactive UI designs.
+</Text>
+<Text className={styles.description} data-visible={visible} size="l" as="p">
+  I’ve worked on projects like an Interactive Quiz Application, a Live News Website, and a LinkedIn Clone. When I’m not coding, I enjoy exploring cybersecurity, working on side projects, and learning about new tech trends. I’m always open to collaborating on exciting projects, so feel free to reach out!
+</Text>
   </Fragment>
 );
 
