@@ -14,6 +14,7 @@ import rehypePrism from '@mapbox/rehype-prism';
 export default defineConfig({
   assetsInclude: ['**/*.glb', '**/*.hdr', '**/*.glsl'],
   build: {
+    chunkSizeWarningLimit: 1000,
     assetsInlineLimit: 1024,
   },
   server: {
