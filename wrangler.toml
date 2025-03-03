@@ -1,5 +1,5 @@
 name = "my-portfolio"
-pages_build_output_dir = "./build/client"
+compatibility_flags = ["nodejs_compat"]
 
 kv_namespaces = [
   { id = "MY_KV", binding="MY_KV" }
