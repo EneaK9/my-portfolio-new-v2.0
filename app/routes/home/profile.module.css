@@ -78,15 +78,15 @@
 }
 
 .tag {
-  margin-top: 220px;
-  margin-bottom: 40px;
+  margin-top: 0;
+  margin-bottom: var(--spaceL);
   display: grid;
   grid-template-columns: var(--space4XL) 1fr;
   gap: 12px;
   align-items: center;
 
   @media (--mediaTablet) {
-    margin-top: 30px;
+    margin-top: 0;
   }
 }
 
