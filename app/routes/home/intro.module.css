@@ -86,6 +86,10 @@
   }
 }
 
+.disciplineRow {
+  min-height: 1em;
+}
+
 @keyframes introTextReveal {
   0% {
     color: color-mix(in lab, var(--text) 0%, transparent);
