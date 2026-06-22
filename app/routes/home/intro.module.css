@@ -88,6 +88,7 @@
 
 .disciplineRow {
   min-height: 1em;
+  min-width: var(--discipline-width, 14ch);
 }
 
 @keyframes introTextReveal {
