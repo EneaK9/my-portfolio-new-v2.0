@@ -14,7 +14,7 @@ import { useRef } from 'react';
 import { cssProps, msToNum, numToMs } from '~/utils/style';
 import { baseMeta } from '~/utils/meta';
 import { Form, useActionData, useNavigation } from '@remix-run/react';
-import { json } from '@remix-run/cloudflare';
+import { json } from '@remix-run/node';
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 import styles from './contact.module.css';
 
@@ -31,11 +31,24 @@ const MAX_MESSAGE_LENGTH = 4096;
 const EMAIL_PATTERN = /(.+)@(.+){2,}\.(.+){2,}/;
 
 export async function action({ context, request }) {
+  const env = context?.cloudflare?.env ?? process.env;
+  const awsAccessKeyId = env.AWS_ACCESS_KEY_ID;
+  const awsSecretAccessKey = env.AWS_SECRET_ACCESS_KEY;
+  const toEmail = env.EMAIL;
+  const fromEmail = env.FROM_EMAIL;
+
+  if (!awsAccessKeyId || !awsSecretAccessKey || !toEmail || !fromEmail) {
+    return json(
+      { errors: { message: 'Server is missing email configuration variables.' } },
+      { status: 500 }
+    );
+  }
+
   const ses = new SESClient({
     region: 'us-east-1',
     credentials: {
-      accessKeyId: context.cloudflare.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: context.cloudflare.env.AWS_SECRET_ACCESS_KEY,
+      accessKeyId: awsAccessKeyId,
+      secretAccessKey: awsSecretAccessKey,
     },
   });
 
@@ -73,7 +86,7 @@ export async function action({ context, request }) {
   await ses.send(
     new SendEmailCommand({
       Destination: {
-        ToAddresses: [context.cloudflare.env.EMAIL],
+        ToAddresses: [toEmail],
       },
       Message: {
         Body: {
@@ -85,7 +98,7 @@ export async function action({ context, request }) {
           Data: `Portfolio message from ${email}`,
         },
       },
-      Source: `Portfolio <${context.cloudflare.env.FROM_EMAIL}>`,
+      Source: `Portfolio <${fromEmail}>`,
       ReplyToAddresses: [email],
     })
   );

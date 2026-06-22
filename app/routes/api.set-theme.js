@@ -1,8 +1,16 @@
-import { json, createCookieSessionStorage } from '@remix-run/cloudflare';
+import { json, createCookieSessionStorage } from '@remix-run/node';
 
 export async function action({ request, context }) {
   const formData = await request.formData();
   const theme = formData.get('theme');
+  const env = context?.cloudflare?.env ?? process.env;
+  const sessionSecret =
+    env.SESSION_SECRET ||
+    (process.env.NODE_ENV === 'development' ? 'development-session-secret' : undefined);
+
+  if (!sessionSecret) {
+    throw new Error('Missing SESSION_SECRET environment variable.');
+  }
 
   const { getSession, commitSession } = createCookieSessionStorage({
     cookie: {
@@ -11,7 +19,7 @@ export async function action({ request, context }) {
       maxAge: 604_800,
       path: '/',
       sameSite: 'lax',
-      secrets: [context.cloudflare.env.SESSION_SECRET || ' '],
+      secrets: [sessionSecret],
       secure: true,
     },
   });

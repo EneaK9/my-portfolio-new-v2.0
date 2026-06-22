@@ -35,6 +35,20 @@ I've set up the site using Cloudflare for hosting. Deploy the site to Cloudflare
 npm run deploy
 ```
 
+To deploy on Vercel (production), set these project environment variables in Vercel first:
+
+- `SESSION_SECRET`
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `EMAIL`
+- `FROM_EMAIL`
+
+Then deploy:
+
+```bash
+npm run deploy:vercel
+```
+
 ## Permissions
 
 I'm cool with anyone using the code or parts of the code for their own site, it is open source so people can learn from it and adapt it. However, I would encourage you to modify the theme and components it to make it your own. If you are using the site's design largely unmodified, I'd appreciate being credited as the designer of the website.
