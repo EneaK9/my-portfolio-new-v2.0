@@ -20,11 +20,17 @@ const ProfileText = ({ visible, titleId }) => (
       <DecoderText text="Hi there" start={visible} delay={500} />
     </Heading>
     <Text className={styles.description} data-visible={visible} size="l" as="p">
-  I’m Enea, a Computer Science student at Polis University and a Software Developer. My expertise includes building modern web applications using React, Next.js, TypeScript, and Tailwind CSS. I have a strong foundation in Python, Java, and C#, and I enjoy creating intuitive user experiences with interactive UI designs.
-</Text>
-<Text className={styles.description} data-visible={visible} size="l" as="p">
-  I’ve worked on projects like an Interactive Quiz Application, a Live News Website, and a LinkedIn Clone. When I’m not coding, I enjoy exploring cybersecurity, working on side projects, and learning about new tech trends. I’m always open to collaborating on exciting projects, so feel free to reach out!
-</Text>
+      AI/ML Engineer with 4 years of experience specializing in LLM application engineering,
+      autonomous agents, and scalable Python backends. Deep expertise in designing robust
+      LangGraph architectures, building multi-agent systems with Agno, and engineering advanced
+      retrieval pipelines (RAG) with hybrid search and citation grounding.
+    </Text>
+    <Text className={styles.description} data-visible={visible} size="l" as="p">
+      Proven track record of developing production-grade AI tools, from automated social media
+      policy validators to AI-powered career platforms with sophisticated model routing, fallback
+      strategies, and evaluation frameworks. Strong foundation in Data Science, computer vision,
+      and building highly observable, test-driven LLM applications.
+    </Text>
   </Fragment>
 );
 
