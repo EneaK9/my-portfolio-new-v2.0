@@ -4,16 +4,15 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useFetcher,
   useLoaderData,
   useNavigation,
   useRouteError,
 } from '@remix-run/react';
-import { createCookieSessionStorage, json } from '@remix-run/node';
+import { json } from '@remix-run/node';
 import { ThemeProvider, themeStyles } from '~/components/theme-provider';
 import GothamBook from '~/assets/fonts/gotham-book.woff2';
 import GothamMedium from '~/assets/fonts/gotham-medium.woff2';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Error } from '~/layouts/error';
 import { VisuallyHidden } from '~/components/visually-hidden';
 import { Navbar } from '~/layouts/navbar';
@@ -46,54 +45,57 @@ export const links = () => [
   { rel: 'author', href: '/humans.txt', type: 'text/plain' },
 ];
 
-export const loader = async ({ request, context }) => {
+const VALID_THEMES = new Set(['dark', 'light']);
+
+function getThemeFromCookie(cookieHeader) {
+  if (!cookieHeader) return 'dark';
+  const match = cookieHeader.match(/(?:^|;\s*)theme=(dark|light)(?:;|$)/);
+  return match?.[1] || 'dark';
+}
+
+function getNextTheme(currentTheme, requestedTheme) {
+  if (requestedTheme && VALID_THEMES.has(requestedTheme)) {
+    return requestedTheme;
+  }
+  return currentTheme === 'dark' ? 'light' : 'dark';
+}
+
+export const loader = async ({ request }) => {
   const { url } = request;
   const { pathname } = new URL(url);
   const pathnameSliced = pathname.endsWith('/') ? pathname.slice(0, -1) : url;
   const canonicalUrl = `${config.url}${pathnameSliced}`;
-  const env = context?.cloudflare?.env ?? process.env;
-  const sessionSecret = env.SESSION_SECRET || 'fallback-session-secret';
+  const theme = getThemeFromCookie(request.headers.get('Cookie'));
 
-  const { getSession, commitSession } = createCookieSessionStorage({
-    cookie: {
-      name: '__session',
-      httpOnly: true,
-      maxAge: 604_800,
-      path: '/',
-      sameSite: 'lax',
-      secrets: [sessionSecret],
-      secure: true,
-    },
-  });
-
-  const session = await getSession(request.headers.get('Cookie'));
-  const theme = session.get('theme') || 'dark';
-
-  return json(
-    { canonicalUrl, theme },
-    {
-      headers: {
-        'Set-Cookie': await commitSession(session),
-      },
-    }
-  );
+  return json({ canonicalUrl, theme });
 };
 
 export default function App() {
-  let { canonicalUrl, theme } = useLoaderData();
-  const fetcher = useFetcher();
+  const { canonicalUrl, theme: initialTheme } = useLoaderData();
+  const [theme, setTheme] = useState(initialTheme);
   const { state } = useNavigation();
 
-  if (fetcher.formData?.has('theme')) {
-    theme = fetcher.formData.get('theme');
+  function toggleTheme(newTheme) {
+    const nextTheme = getNextTheme(theme, newTheme);
+    setTheme(nextTheme);
+
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('theme', nextTheme);
+      document.cookie = `theme=${nextTheme}; Path=/; Max-Age=31536000; SameSite=Lax`;
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      document.body?.setAttribute('data-theme', nextTheme);
+    }
   }
 
-  function toggleTheme(newTheme) {
-    fetcher.submit(
-      { theme: newTheme ? newTheme : theme === 'dark' ? 'light' : 'dark' },
-      { action: '/set-theme', method: 'post' }
-    );
-  }
+  useEffect(() => {
+    const storedTheme = window.localStorage.getItem('theme');
+    if (storedTheme && VALID_THEMES.has(storedTheme)) {
+      setTheme(storedTheme);
+      document.cookie = `theme=${storedTheme}; Path=/; Max-Age=31536000; SameSite=Lax`;
+      document.documentElement.setAttribute('data-theme', storedTheme);
+      document.body?.setAttribute('data-theme', storedTheme);
+    }
+  }, []);
 
   useEffect(() => {
     console.info(
@@ -112,6 +114,11 @@ export default function App() {
         <meta
           name="color-scheme"
           content={theme === 'light' ? 'light dark' : 'dark light'}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);document.cookie='theme='+t+'; Path=/; Max-Age=31536000; SameSite=Lax';}}catch(e){}})();`,
+          }}
         />
         <style dangerouslySetInnerHTML={{ __html: themeStyles }} />
         <Meta />
