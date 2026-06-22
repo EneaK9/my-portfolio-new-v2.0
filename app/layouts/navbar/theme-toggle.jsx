@@ -10,11 +10,15 @@ export const ThemeToggle = ({ isMobile, ...rest }) => {
 
   return (
     <Button
+      type="button"
       iconOnly
       className={styles.toggle}
       data-mobile={isMobile}
       aria-label="Toggle theme"
-      onClick={() => toggleTheme()}
+      onClick={event => {
+        event.preventDefault();
+        toggleTheme();
+      }}
       {...rest}
     >
       <svg aria-hidden className={styles.svg} width="38" height="38" viewBox="0 0 38 38">
