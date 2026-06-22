@@ -52,13 +52,7 @@ export const loader = async ({ request, context }) => {
   const pathnameSliced = pathname.endsWith('/') ? pathname.slice(0, -1) : url;
   const canonicalUrl = `${config.url}${pathnameSliced}`;
   const env = context?.cloudflare?.env ?? process.env;
-  const sessionSecret =
-    env.SESSION_SECRET ||
-    (process.env.NODE_ENV === 'development' ? 'development-session-secret' : undefined);
-
-  if (!sessionSecret) {
-    throw new Error('Missing SESSION_SECRET environment variable.');
-  }
+  const sessionSecret = env.SESSION_SECRET || 'fallback-session-secret';
 
   const { getSession, commitSession } = createCookieSessionStorage({
     cookie: {

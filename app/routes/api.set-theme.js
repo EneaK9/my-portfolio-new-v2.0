@@ -4,13 +4,7 @@ export async function action({ request, context }) {
   const formData = await request.formData();
   const theme = formData.get('theme');
   const env = context?.cloudflare?.env ?? process.env;
-  const sessionSecret =
-    env.SESSION_SECRET ||
-    (process.env.NODE_ENV === 'development' ? 'development-session-secret' : undefined);
-
-  if (!sessionSecret) {
-    throw new Error('Missing SESSION_SECRET environment variable.');
-  }
+  const sessionSecret = env.SESSION_SECRET || 'fallback-session-secret';
 
   const { getSession, commitSession } = createCookieSessionStorage({
     cookie: {
